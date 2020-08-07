@@ -16,7 +16,7 @@ struct DashboardView: View {
                         .frame(height: 300)
                     
                     SleepActivityView()
-                        .frame(height: 200)
+                        .frame(height: 240)
                 }
                 VStack {
                     WaterIntakeActivityView()
@@ -91,6 +91,21 @@ struct StepsActivityView: View {
     }
 }
 
+struct BarChartView: View {
+    let data: [CGFloat]
+    let viewHeight: CGFloat
+    
+    var body: some View {
+        HStack(alignment: .bottom, spacing: 8) {
+            ForEach(data.indices, id: \.self) { i in
+                RoundedRectangle(cornerRadius: 3)
+                    .fill(i % 2 == 0 ? ColorConstants.sleepBarColor : Color.white)
+                    .frame(width: 6, height: viewHeight * data[i])
+            }
+        }
+    }
+}
+
 struct SleepActivityView: View {
     var body: some View {
         ZStack {
@@ -101,14 +116,18 @@ struct SleepActivityView: View {
                 ActivityTitleView(title: "Sleep", imageName: "cloud.moon.fill")
                 Spacer()
                 
+                BarChartView(data: DataManager.getSleepData(), viewHeight: 60)
+                
+                Spacer()
                 Text("6h 45min") //TODO: need to change from data manager
                     .font(.title2)
                     .bold()
                 
+                Spacer()
                 Text("To feel good \(DataManager.recommendedSleep)h recommended for you")
                     .font(.caption2)
                     .fontWeight(.light)
-                    .padding(.all)
+                    .padding(.all, 8)
                 Spacer()
             }
         }.foregroundColor(.white)
@@ -148,10 +167,33 @@ struct CaloryIntakeView: View {
             VStack {
                 ActivityTitleView(title: "Calories", imageName: "flame.fill")
                 Spacer()
-                ActivityInfoView(title: "\(DataManager.todaysCaloryIntake)", description: "Calories")
+                ZStack {
+                    CircularProgressView(progress: 0.54 /*DataManager.getCaloryProgress()*/)
+                        .padding(.all, 10)
+                    ActivityInfoView(title: "\(DataManager.todaysCaloryIntake)", description: "Calories")
+                }
                 Spacer()
             }
         }.foregroundColor(ColorConstants.appPrimaryColor)
+    }
+}
+
+struct CircularProgressView: View {
+    let progress: CGFloat
+    
+    var body: some View {
+        Circle()
+            .stroke(lineWidth: 15.0)
+            .fill(Color.white)
+        
+        Circle()
+            .trim(from: 0.0, to: progress)
+            .stroke(style: StrokeStyle.init(lineWidth: 15.0, lineCap: .round))
+            .rotation(Angle.degrees(-90))
+            .rotation3DEffect(
+                Angle.degrees(180),
+                axis: (x: 0.0, y: 1.0, z: 0.0)
+            )
     }
 }
 
