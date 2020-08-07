@@ -16,11 +16,11 @@ struct DashboardView: View {
                         .frame(height: 300)
                     
                     SleepActivityView()
-                        .frame(height: 240)
+                        .frame(height: 300)
                 }
                 VStack {
                     WaterIntakeActivityView()
-                        .frame(height: 150)
+                        .frame(height: 155)
                     
                     CaloryIntakeView()
                     
@@ -74,10 +74,21 @@ struct StepsActivityView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .fill(ColorConstants.activityBackgroundColor)
+                .shadow(radius: 2)
             
             VStack {
                 ActivityTitleView(title: "Activity", imageName: "figure.walk")
                 Spacer()
+                
+                SmoothLineGraph(data: DataManager.getStepCountData(), isFill: true)
+                    .fill(ColorConstants.orangeInvertLinearGradient)
+                HStack {
+                    ForEach(DataManager.stepsCountDataTime, id: \.self) { time in
+                        Text(time)
+                            .font(Font.custom("", size: 9))
+                    }
+                }
+                
                 ActivityInfoView(title: "\(DataManager.todaysStepsCount)", description: "Steps")
                 Spacer()
                 
@@ -111,6 +122,7 @@ struct SleepActivityView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .fill(ColorConstants.appPrimaryColor)
+                .shadow(radius: 2)
             
             VStack {
                 ActivityTitleView(title: "Sleep", imageName: "cloud.moon.fill")
@@ -139,6 +151,7 @@ struct WaterIntakeActivityView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .fill(Color.white)
+                .shadow(radius: 2)
             
             VStack {
                 ActivityTitleView(title: "Water", imageName: "drop.fill")
@@ -163,6 +176,7 @@ struct CaloryIntakeView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .fill(ColorConstants.caloryBackgroundColor)
+                .shadow(radius: 2)
             
             VStack {
                 ActivityTitleView(title: "Calories", imageName: "flame.fill")
@@ -202,14 +216,76 @@ struct HeartRateView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .fill(Color.white)
+                .shadow(radius: 2)
             
             VStack {
                 ActivityTitleView(title: "Heart", imageName: "suit.heart.fill")
                 Spacer()
-                ActivityInfoView(title: "\(DataManager.todaysAverageBPM)", description: "bpm")
+                ZStack {
+                    SmoothLineGraph(data: DataManager.getHeartRateData(), isFill: true)
+                        .fill(ColorConstants.orangeLinearGradient)
+                    SmoothLineGraph(data: DataManager.getHeartRateData(), isFill: false)
+                        .stroke(ColorConstants.activityBackgroundColor, lineWidth: 2.0)
+                }
+                ActivityInfoView(title: "\(DataManager.getAverateHartRate())", description: "bpm")
                 Spacer()
             }
         }.foregroundColor(ColorConstants.appPrimaryColor)
+    }
+}
+
+struct SmoothLineGraph: Shape {
+    
+    let data: [CGFloat]
+    let isFill: Bool
+    
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        let height = rect.height
+        let step = rect.width / CGFloat(data.count - 1)
+        var x: CGFloat = 0
+        var y: CGFloat = 0
+
+        var previousPoint = CGPoint(x: x, y: (height - (height * data[0])) * height)
+        
+        path.move(to: CGPoint(x: x, y: y))
+        
+        for itemIndex in 1..<data.count {
+            y = height - (height * data[itemIndex])
+            
+            let p2 = CGPoint(x: step * CGFloat(itemIndex), y: y)
+            let midPoint = CGPoint.middlePointForPoint(p1: previousPoint, p2: p2)
+            let controlPoint1 = CGPoint.controlPointForPoint(p1: midPoint, p2: previousPoint)
+            let controlPoint2 = CGPoint.controlPointForPoint(p1: midPoint, p2: p2)
+            
+            path.addQuadCurve(to: midPoint, control: controlPoint1)
+            path.addQuadCurve(to: p2, control: controlPoint2)
+            
+            previousPoint = p2
+            x += step
+        }
+        if isFill {
+            path.addLine(to: CGPoint(x: rect.width, y: height))
+            path.addLine(to: CGPoint(x: 0, y: height))
+            path.addLine(to: CGPoint(x: 0, y: height - (height * data[0])))
+        }
+        return path
+    }
+}
+
+extension CGPoint {
+    static func middlePointForPoint(p1: CGPoint, p2: CGPoint) -> CGPoint {
+        return CGPoint(x: (p1.x + p2.x)/2, y: (p1.y + p2.y)/2)
+    }
+    static func controlPointForPoint(p1: CGPoint, p2: CGPoint) -> CGPoint {
+        var controlPoint = CGPoint.middlePointForPoint(p1: p1, p2: p2)
+        let yDiff = abs(p2.y - controlPoint.y)
+        if (p1.y < p2.y) {
+            controlPoint.y += yDiff
+        } else {
+            controlPoint.y -= yDiff
+        }
+        return controlPoint
     }
 }
 

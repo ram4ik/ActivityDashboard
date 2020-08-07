@@ -23,6 +23,11 @@ struct DataManager {
     
     public static let sleepData: [CGFloat] = [2, 4, 3, 5, 7, 6.75, 3.5, 5]
     
+    public static let heartRateData: [Int] = [127, 105, 97, 126, 103, 95, 117, 118, 80, 102]
+    
+    public static let stepsCountData: [Int] = [420, 404, 323, 105, 297, 126, 203, 195, 401, 158, 180, 102]
+    public static let stepsCountDataTime: [String] = ["09:00", "11:00", "13:00", "15:00", "17:00"]
+    
     public static func getSleepData() -> [CGFloat] {
         var data: [CGFloat] = []
         
@@ -35,5 +40,32 @@ struct DataManager {
     public static func getCaloryProgress() -> CGFloat {
         let progress: CGFloat = CGFloat(CGFloat(todaysCaloryIntake)/CGFloat(recommendedCaloryIntake))
         return progress
+    }
+    
+    public static func getAverateHartRate() -> Int {
+        var total: Int = 0
+        for item in heartRateData {
+            total = total + Int(item)
+        }
+        let average: Int = total / heartRateData.count
+        return average
+    }
+    
+    public static func getHeartRateData() -> [CGFloat] {
+        var data: [CGFloat] = []
+        let highest = heartRateData.max()!
+        for rate in heartRateData {
+            data.append(CGFloat(rate)/CGFloat(highest))
+        }
+        return data
+    }
+    
+    public static func getStepCountData() -> [CGFloat] {
+        var data: [CGFloat] = []
+        let highest = stepsCountData.max()!
+        for step in stepsCountData {
+            data.append(CGFloat(step)/CGFloat(highest))
+        }
+        return data
     }
 }

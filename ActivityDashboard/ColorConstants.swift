@@ -15,5 +15,9 @@ struct ColorConstants {
     public static let caloryBackgroundColor = Color.init(red: 227/255, green: 218/255, blue: 255/255)
     
     public static let sleepBarColor = Color.init(red: 134/255, green: 115/255, blue: 195/255)
+    
+    public static let orangeLinearGradient = LinearGradient.init(gradient: Gradient(colors: [activityBackgroundColor, Color.white]), startPoint: .top, endPoint: .bottom)
+    
+    public static let orangeInvertLinearGradient = LinearGradient.init(gradient: Gradient(colors: [Color.white, activityBackgroundColor]), startPoint: .top, endPoint: .bottom)
 
 }
