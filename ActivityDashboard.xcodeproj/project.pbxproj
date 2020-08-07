@@ -11,6 +11,10 @@
 		95EF4E7E24DD73C800526E6B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EF4E7D24DD73C800526E6B /* ContentView.swift */; };
 		95EF4E8024DD73CA00526E6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95EF4E7F24DD73CA00526E6B /* Assets.xcassets */; };
 		95EF4E8324DD73CA00526E6B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95EF4E8224DD73CA00526E6B /* Preview Assets.xcassets */; };
+		95EF4E8B24DD742300526E6B /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EF4E8A24DD742300526E6B /* ColorConstants.swift */; };
+		95EF4E8D24DD759C00526E6B /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EF4E8C24DD759C00526E6B /* DataManager.swift */; };
+		95EF4E8F24DD87AE00526E6B /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EF4E8E24DD87AE00526E6B /* UserInfoView.swift */; };
+		95EF4E9124DD883E00526E6B /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EF4E9024DD883E00526E6B /* DashboardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +24,10 @@
 		95EF4E7F24DD73CA00526E6B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		95EF4E8224DD73CA00526E6B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		95EF4E8424DD73CA00526E6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		95EF4E8A24DD742300526E6B /* ColorConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
+		95EF4E8C24DD759C00526E6B /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		95EF4E8E24DD87AE00526E6B /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
+		95EF4E9024DD883E00526E6B /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +65,10 @@
 				95EF4E7F24DD73CA00526E6B /* Assets.xcassets */,
 				95EF4E8424DD73CA00526E6B /* Info.plist */,
 				95EF4E8124DD73CA00526E6B /* Preview Content */,
+				95EF4E8A24DD742300526E6B /* ColorConstants.swift */,
+				95EF4E8C24DD759C00526E6B /* DataManager.swift */,
+				95EF4E8E24DD87AE00526E6B /* UserInfoView.swift */,
+				95EF4E9024DD883E00526E6B /* DashboardView.swift */,
 			);
 			path = ActivityDashboard;
 			sourceTree = "<group>";
@@ -138,8 +150,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95EF4E8B24DD742300526E6B /* ColorConstants.swift in Sources */,
+				95EF4E9124DD883E00526E6B /* DashboardView.swift in Sources */,
+				95EF4E8D24DD759C00526E6B /* DataManager.swift in Sources */,
 				95EF4E7E24DD73C800526E6B /* ContentView.swift in Sources */,
 				95EF4E7C24DD73C800526E6B /* ActivityDashboardApp.swift in Sources */,
+				95EF4E8F24DD87AE00526E6B /* UserInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
